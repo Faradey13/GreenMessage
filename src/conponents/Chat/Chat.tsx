@@ -14,12 +14,13 @@ const Chat: React.FC = () => {
     const [inputNewChatValue, setInputNewChatValue] = useState<string>('');
     const [chats, setNewChat] = useState<string[]>([]);
     const [chatId, setChatId] = useState<string>('');
-    const [isFakeLogin, setIsFakeLogin] = useState<boolean>();
+    const [isFakeLogin, setIsFakeLogin] = useState<boolean>(false);
 
     const {messages, sendMessage} = useGreenAPI(
         {apiToken: apiInstanceKey,
             instanceId: instanceId,
             chatId:chatId,
+            isAuth: isFakeLogin,
             setCurrentMessage:
             setCurrentMessage});
     useEffect(() => {

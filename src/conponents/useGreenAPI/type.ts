@@ -30,6 +30,7 @@ export interface useGreenApiI {
     instanceId: string;
     chatId: string;
     setCurrentMessage: (text: string) => void;
+    isAuth: boolean;
 }
 
 export interface IMessage {

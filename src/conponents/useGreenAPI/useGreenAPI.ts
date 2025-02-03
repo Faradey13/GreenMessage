@@ -15,7 +15,7 @@ export const useGreenAPI = (props: useGreenApiI) => {
 
     useEffect(() => {
         setMessages(getMessagesForCurrentChatId(props.chatId));
-    }, [props.chatId, allMessages]);
+    }, [props.chatId]);
 
     useEffect(() => {
         const existingMessages = JSON.parse(localStorage.getItem('messages') || '[]');
@@ -23,12 +23,13 @@ export const useGreenAPI = (props: useGreenApiI) => {
     }, []);
 
     useEffect(() => {
+        if(!props.isAuth)return
         let intervalId: number;
         const fetchMessages = async () => {
             const response = await receiveMessage();
             if (response) {
                 if (response?.body.typeWebhook === 'incomingMessageReceived' &&
-                    response.body.messageData.typeMessage === 'textMessage') {
+                    response?.body?.messageData?.textMessageData?.textMessage) {
                     const newMessage: IMessage = {
                         text: response.body.messageData.textMessageData.textMessage,
                         type: 'received',
@@ -60,7 +61,7 @@ export const useGreenAPI = (props: useGreenApiI) => {
                 clearInterval(intervalId);
             }
         };
-    }, []);
+    }, [props.isAuth]);
 
     const sendMessage = async (message: string) => {
         try {
