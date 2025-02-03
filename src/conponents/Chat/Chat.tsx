@@ -11,7 +11,7 @@ const Chat: React.FC = () => {
     const [instanceId, setInstanceId] = useState<string>(idInstance ? idInstance : '');
     const [apiInstanceKey, setApiInstanceKey] = useState<string>(tokenInstance ? tokenInstance : '' );
     const [currentMessage, setCurrentMessage] = useState<string>('');
-    const [inputNewChatValue, setInputNewChatValue] = useState('');
+    const [inputNewChatValue, setInputNewChatValue] = useState<string>('');
     const [chats, setNewChat] = useState<string[]>([]);
     const [chatId, setChatId] = useState<string>('');
     const [isFakeLogin, setIsFakeLogin] = useState<boolean>();

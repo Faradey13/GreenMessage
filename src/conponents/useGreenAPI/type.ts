@@ -17,7 +17,7 @@ export interface ReceiveMessageResponse {
             senderContactName: string;
         };
         messageData: {
-            typeMessage: 'textMessage';
+            typeMessage: 'textMessage' | 'extendedTextMessage';
             textMessageData: {
                 textMessage: string;
             };

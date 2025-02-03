@@ -8,7 +8,7 @@ export const useGreenAPI = (props: useGreenApiI) => {
     const [allMessages, setAllMessages] = useState<IMessage[]>([]);
 
     const getMessagesForCurrentChatId = (chatId: string): IMessage[] => {
-      return   allMessages.filter(
+        return allMessages.filter(
             (message: IMessage) => message.chatId === chatId
         );
     };
@@ -18,8 +18,8 @@ export const useGreenAPI = (props: useGreenApiI) => {
     }, [props.chatId, allMessages]);
 
     useEffect(() => {
-       const existingMessages = JSON.parse(localStorage.getItem('messages') || '[]');
-       setAllMessages(existingMessages);
+        const existingMessages = JSON.parse(localStorage.getItem('messages') || '[]');
+        setAllMessages(existingMessages);
     }, []);
 
     useEffect(() => {
@@ -27,7 +27,8 @@ export const useGreenAPI = (props: useGreenApiI) => {
         const fetchMessages = async () => {
             const response = await receiveMessage();
             if (response) {
-                if (response?.body.typeWebhook === 'incomingMessageReceived') {
+                if (response?.body.typeWebhook === 'incomingMessageReceived' &&
+                    response.body.messageData.typeMessage === 'textMessage') {
                     const newMessage: IMessage = {
                         text: response.body.messageData.textMessageData.textMessage,
                         type: 'received',
@@ -47,6 +48,7 @@ export const useGreenAPI = (props: useGreenApiI) => {
                 } else {
                     await deleteNotification(String(response?.receiptId));
                 }
+
             }
         };
         const startMessageFetch = () => {
@@ -100,7 +102,7 @@ export const useGreenAPI = (props: useGreenApiI) => {
 
     const deleteNotification = async (receiptId: string) => {
         try {
-            return  $api.delete(`/waInstance${props.instanceId}/deleteNotification/${props.apiToken}/${receiptId}`);
+            return $api.delete(`/waInstance${props.instanceId}/deleteNotification/${props.apiToken}/${receiptId}`);
         } catch (error) {
             if (error instanceof AxiosError) {
                 console.error(error.message);
